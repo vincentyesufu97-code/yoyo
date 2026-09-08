@@ -1,44 +1,34 @@
--- Simple Fly Script (legit)
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild("HumanoidRootPart")
+-- Simple Universal GUI (works in any game)
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ButtonSpeed = Instance.new("TextButton")
+local ButtonJump = Instance.new("TextButton")
 
-local flying = false
-local speed = 3
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-local UIS = game:GetService("UserInputService")
-local RS = game:GetService("RunService")
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.Size = UDim2.new(0, 200, 0, 120)
+Frame.Position = UDim2.new(0, 20, 0, 20)
 
-UIS.InputBegan:Connect(function(key)
-    if key.KeyCode == Enum.KeyCode.F then
-        flying = not flying
-    end
+ButtonSpeed.Parent = Frame
+ButtonSpeed.Text = "Speed 50"
+ButtonSpeed.Size = UDim2.new(0, 180, 0, 40)
+ButtonSpeed.Position = UDim2.new(0, 10, 0, 10)
+ButtonSpeed.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ButtonSpeed.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+ButtonJump.Parent = Frame
+ButtonJump.Text = "Jump 100"
+ButtonJump.Size = UDim2.new(0, 180, 0, 40)
+ButtonJump.Position = UDim2.new(0, 10, 0, 60)
+ButtonJump.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ButtonJump.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+ButtonSpeed.MouseButton1Click:Connect(function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
 end)
 
-RS.RenderStepped:Connect(function()
-    if flying then
-        local cam = workspace.CurrentCamera
-        local move = Vector3.new()
-
-        if UIS:IsKeyDown(Enum.KeyCode.W) then
-            move = move + cam.CFrame.LookVector
-        end
-        if UIS:IsKeyDown(Enum.KeyCode.S) then
-            move = move - cam.CFrame.LookVector
-        end
-        if UIS:IsKeyDown(Enum.KeyCode.A) then
-            move = move - cam.CFrame.RightVector
-        end
-        if UIS:IsKeyDown(Enum.KeyCode.D) then
-            move = move + cam.CFrame.RightVector
-        end
-        if UIS:IsKeyDown(Enum.KeyCode.Space) then
-            move = move + Vector3.new(0,1,0)
-        end
-        if UIS:IsKeyDown(Enum.KeyCode.LeftShift) then
-            move = move - Vector3.new(0,1,0)
-        end
-
-        hrp.CFrame = hrp.CFrame + (move * speed)
-    end
+ButtonJump.MouseButton1Click:Connect(function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
 end)
