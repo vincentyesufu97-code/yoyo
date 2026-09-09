@@ -1,4 +1,13 @@
--- MENU COMPATTO SISTEMATO (STILE REDZ HUB)
+-- VINCENT HUB (SIDEBAR + FEATURES PAGE) LEGIT
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hum = char:WaitForChild("Humanoid")
+
+player.CharacterAdded:Connect(function(newChar)
+    char = newChar
+    hum = newChar:WaitForChild("Humanoid")
+end)
+
 local gui = Instance.new("ScreenGui")
 gui.Parent = game:GetService("CoreGui")
 
@@ -19,11 +28,11 @@ local miniGlow = Instance.new("UIStroke", mini)
 miniGlow.Color = Color3.fromRGB(0, 140, 255)
 miniGlow.Thickness = 2
 
--- MENU COMPATTO
+-- MENU PRINCIPALE
 local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0, 280, 0, 360)
-main.Position = UDim2.new(0, 20, 0, 100)
-main.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+main.Size = UDim2.new(0, 500, 0, 400)
+main.Position = UDim2.new(0, 90, 0, 100)
+main.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 main.Visible = false
 main.Active = true
 main.Draggable = true
@@ -33,136 +42,171 @@ local mainGlow = Instance.new("UIStroke", main)
 mainGlow.Color = Color3.fromRGB(0, 140, 255)
 mainGlow.Thickness = 2
 
--- HEADER
-local header = Instance.new("Frame", main)
-header.Size = UDim2.new(1, 0, 0, 42)
-header.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Instance.new("UICorner", header).CornerRadius = UDim.new(0, 12)
-
-local title = Instance.new("TextLabel", header)
-title.Size = UDim2.new(1, -50, 1, 0)
-title.Position = UDim2.new(0, 10, 0, 0)
-title.Text = "Vincent Hub"
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.Font = Enum.Font.GothamBold
-title.TextSize = 20
-title.BackgroundTransparency = 1
-
-local toggle = Instance.new("TextButton", header)
-toggle.Size = UDim2.new(0, 35, 0, 35)
-toggle.Position = UDim2.new(1, -40, 0, 3)
-toggle.Text = "□"
-toggle.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-toggle.Font = Enum.Font.GothamBold
-toggle.TextSize = 20
-Instance.new("UICorner", toggle).CornerRadius = UDim.new(0, 10)
-
-local big = true
-toggle.MouseButton1Click:Connect(function()
-    if big then
-        main.Size = UDim2.new(0, 220, 0, 280)
-        big = false
-    else
-        main.Size = UDim2.new(0, 280, 0, 360)
-        big = true
-    end
-end)
-
 mini.MouseButton1Click:Connect(function()
     main.Visible = not main.Visible
 end)
 
--- SEZIONE MOVIMENTO
-local mov = Instance.new("TextLabel", main)
-mov.Size = UDim2.new(1, -20, 0, 25)
-mov.Position = UDim2.new(0, 10, 0, 55)
-mov.Text = "Movimento"
-mov.TextColor3 = Color3.fromRGB(0, 140, 255)
-mov.Font = Enum.Font.GothamBold
-mov.TextSize = 18
-mov.BackgroundTransparency = 1
+-- SIDEBAR SINISTRA
+local sidebar = Instance.new("Frame", main)
+sidebar.Size = UDim2.new(0, 140, 1, 0)
+sidebar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 12)
 
--- SPEED
-local speedBox = Instance.new("TextBox", main)
-speedBox.Size = UDim2.new(1, -20, 0, 30)
-speedBox.Position = UDim2.new(0, 10, 0, 85)
-speedBox.PlaceholderText = "Speed (0-500)"
-speedBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-speedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-speedBox.Font = Enum.Font.Gotham
-speedBox.TextSize = 16
-Instance.new("UICorner", speedBox).CornerRadius = UDim.new(0, 8)
+local sidebarGlow = Instance.new("UIStroke", sidebar)
+sidebarGlow.Color = Color3.fromRGB(0, 140, 255)
+sidebarGlow.Thickness = 2
 
--- JUMP
-local jumpBox = Instance.new("TextBox", main)
-jumpBox.Size = UDim2.new(1, -20, 0, 30)
-jumpBox.Position = UDim2.new(0, 10, 0, 125)
-jumpBox.PlaceholderText = "Jump (0-500)"
-jumpBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-jumpBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-jumpBox.Font = Enum.Font.Gotham
-jumpBox.TextSize = 16
-Instance.new("UICorner", jumpBox).CornerRadius = UDim.new(0, 8)
+-- PULSANTE FEATURES
+local featuresBtn = Instance.new("TextButton", sidebar)
+featuresBtn.Size = UDim2.new(1, -20, 0, 40)
+featuresBtn.Position = UDim2.new(0, 10, 0, 20)
+featuresBtn.Text = "Features"
+featuresBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+featuresBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+featuresBtn.Font = Enum.Font.GothamBold
+featuresBtn.TextSize = 18
+Instance.new("UICorner", featuresBtn).CornerRadius = UDim.new(0, 10)
 
--- SUPER JUMP
-local superJump = Instance.new("TextButton", main)
-superJump.Size = UDim2.new(1, -20, 0, 35)
-superJump.Position = UDim2.new(0, 10, 0, 165)
-superJump.Text = "Super Jump"
-superJump.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-superJump.TextColor3 = Color3.fromRGB(255, 255, 255)
-superJump.Font = Enum.Font.Gotham
-superJump.TextSize = 18
-Instance.new("UICorner", superJump).CornerRadius = UDim.new(0, 10)
+-- PAGINA FEATURES (DESTRA)
+local page = Instance.new("Frame", main)
+page.Size = UDim2.new(1, -140, 1, 0)
+page.Position = UDim2.new(0, 140, 0, 0)
+page.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+Instance.new("UICorner", page).CornerRadius = UDim.new(0, 12)
 
--- NOCLIP
-local noclipBtn = Instance.new("TextButton", main)
-noclipBtn.Size = UDim2.new(1, -20, 0, 35)
-noclipBtn.Position = UDim2.new(0, 10, 0, 205)
-noclipBtn.Text = "Noclip"
-noclipBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-noclipBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-noclipBtn.Font = Enum.Font.Gotham
-noclipBtn.TextSize = 18
-Instance.new("UICorner", noclipBtn).CornerRadius = UDim.new(0, 10)
+local pageGlow = Instance.new("UIStroke", page)
+pageGlow.Color = Color3.fromRGB(0, 140, 255)
+pageGlow.Thickness = 2
 
--- FLY MOBILE
-local flyBtn = Instance.new("TextButton", main)
-flyBtn.Size = UDim2.new(1, -20, 0, 35)
-flyBtn.Position = UDim2.new(0, 10, 0, 245)
-flyBtn.Text = "Fly"
-flyBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-flyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-flyBtn.Font = Enum.Font.Gotham
-flyBtn.TextSize = 18
-Instance.new("UICorner", flyBtn).CornerRadius = UDim.new(0, 10)
+-- TITOLO PAGINA
+local title = Instance.new("TextLabel", page)
+title.Size = UDim2.new(1, 0, 0, 45)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.Text = "Features"
+title.TextColor3 = Color3.fromRGB(0, 140, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 22
+title.BackgroundTransparency = 1
 
--- PULSANTI FLY ORDINATI
-local function flyButton(txt, pos)
-    local b = Instance.new("TextButton", main)
-    b.Size = UDim2.new(0.3, 0, 0, 30)
-    b.Position = UDim2.new(pos, 0, 0, 285)
-    b.Text = txt
-    b.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    b.TextColor3 = Color3.fromRGB(255, 255, 255)
-    b.Font = Enum.Font.Gotham
-    b.TextSize = 16
-    Instance.new("UICorner", b).CornerRadius = UDim.new(0, 8)
-    return b
+-- FUNZIONE PER CREARE PULSANTI ON/OFF
+local function makeToggle(name, posY)
+    local btn = Instance.new("TextButton", page)
+    btn.Size = UDim2.new(1, -20, 0, 40)
+    btn.Position = UDim2.new(0, 10, 0, posY)
+    btn.Text = name .. " OFF"
+    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 18
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
+    return btn
 end
 
-local flyUp = flyButton("Su", 0.05)
-local flyDown = flyButton("Giù", 0.35)
-local flyForward = flyButton("Avanti", 0.65)
+---------------------------------------------------------
+-- FEATURES LEGIT MIGLIORATI
+---------------------------------------------------------
 
--- ESP
-local espBtn = Instance.new("TextButton", main)
-espBtn.Size = UDim2.new(1, -20, 0, 35)
-espBtn.Position = UDim2.new(0, 10, 0, 325)
-espBtn.Text = "ESP Player"
-espBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-espBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-espBtn.Font = Enum.Font.Gotham
-espBtn.TextSize = 18
-Instance.new("UICorner", espBtn).CornerRadius = UDim.new(0, 10)
+-- SPEED
+local speedOn = false
+local speedBtn = makeToggle("Speed", 60)
+speedBtn.MouseButton1Click:Connect(function()
+    speedOn = not speedOn
+    speedBtn.Text = speedOn and "Speed ON" or "Speed OFF"
+    hum.WalkSpeed = speedOn and 50 or 16
+end)
+
+-- JUMP
+local jumpOn = false
+local jumpBtn = makeToggle("Jump", 110)
+jumpBtn.MouseButton1Click:Connect(function()
+    jumpOn = not jumpOn
+    jumpBtn.Text = jumpOn and "Jump ON" or "Jump OFF"
+    hum.JumpPower = jumpOn and 100 or 50
+end)
+
+-- SUPER JUMP
+local superOn = false
+local superBtn = makeToggle("Super Jump", 160)
+superBtn.MouseButton1Click:Connect(function()
+    superOn = not superOn
+    superBtn.Text = superOn and "Super Jump ON" or "Super Jump OFF"
+end)
+
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if superOn then
+        char.HumanoidRootPart.Velocity = Vector3.new(0, 120, 0)
+    end
+end)
+
+-- NOCLIP
+local noclipOn = false
+local noclipBtn = makeToggle("Noclip", 210)
+noclipBtn.MouseButton1Click:Connect(function()
+    noclipOn = not noclipOn
+    noclipBtn.Text = noclipOn and "Noclip ON" or "Noclip OFF"
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+    if noclipOn and char then
+        for _, v in pairs(char:GetDescendants()) do
+            if v:IsA("BasePart") then v.CanCollide = false end
+        end
+    end
+end)
+
+-- ESP PLAYER (avatar + nome)
+local espOn = false
+local espBtn = makeToggle("ESP Player", 260)
+
+espBtn.MouseButton1Click:Connect(function()
+    espOn = not espOn
+    espBtn.Text = espOn and "ESP Player ON" or "ESP Player OFF"
+
+    for _, plr in pairs(game.Players:GetPlayers()) do
+        if plr ~= player and plr.Character then
+            if espOn then
+                local h = Instance.new("Highlight", plr.Character)
+                h.FillColor = Color3.fromRGB(0, 140, 255)
+                h.OutlineColor = Color3.fromRGB(255, 255, 255)
+
+                local nameTag = Instance.new("BillboardGui", plr.Character)
+                nameTag.Size = UDim2.new(0, 100, 0, 30)
+                nameTag.Adornee = plr.Character:FindFirstChild("Head")
+                nameTag.AlwaysOnTop = true
+
+                local txt = Instance.new("TextLabel", nameTag)
+                txt.Size = UDim2.new(1, 0, 1, 0)
+                txt.BackgroundTransparency = 1
+                txt.Text = plr.Name
+                txt.TextColor3 = Color3.fromRGB(0, 140, 255)
+                txt.Font = Enum.Font.GothamBold
+                txt.TextSize = 18
+            else
+                for _, v in pairs(plr.Character:GetChildren()) do
+                    if v:IsA("Highlight") or v:IsA("BillboardGui") then
+                        v:Destroy()
+                    end
+                end
+            end
+        end
+    end
+end)
+
+-- ANTI AFK
+local afkOn = false
+local afkBtn = makeToggle("Anti-AFK", 310)
+
+local vu = game:GetService("VirtualUser")
+
+afkBtn.MouseButton1Click:Connect(function()
+    afkOn = not afkOn
+    afkBtn.Text = afkOn and "Anti-AFK ON" or "Anti-AFK OFF"
+end)
+
+player.Idled:Connect(function()
+    if afkOn then
+        vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+        task.wait(1)
+        vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+    end
+end)
