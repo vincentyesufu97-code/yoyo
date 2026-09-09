@@ -1,14 +1,28 @@
--- Universal GUI Hub (works in any game)
+-- VINCENT HUB (LEGIT GUI)
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local hum = char:WaitForChild("Humanoid")
 
--- GUI
 local gui = Instance.new("ScreenGui", player.PlayerGui)
+
+-- MINIMIZED BUTTON (quadrato nero con V)
+local mini = Instance.new("TextButton", gui)
+mini.Size = UDim2.new(0, 50, 0, 50)
+mini.Position = UDim2.new(0, 20, 0, 20)
+mini.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+mini.Text = "V"
+mini.TextColor3 = Color3.fromRGB(255, 255, 255)
+mini.Font = Enum.Font.GothamBold
+mini.TextSize = 28
+mini.Active = true
+mini.Draggable = true
+
+-- MAIN MENU
 local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0, 250, 0, 300)
-main.Position = UDim2.new(0, 20, 0, 20)
+main.Size = UDim2.new(0, 260, 0, 330)
+main.Position = UDim2.new(0, 20, 0, 80)
 main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+main.Visible = false
 main.Active = true
 main.Draggable = true
 
@@ -20,62 +34,60 @@ title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 20
 
--- BUTTON FUNCTION
-local function createButton(text, y)
-    local b = Instance.new("TextButton", main)
-    b.Size = UDim2.new(1, -20, 0, 35)
-    b.Position = UDim2.new(0, 10, 0, y)
-    b.Text = text
-    b.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    b.TextColor3 = Color3.fromRGB(255, 255, 255)
-    b.Font = Enum.Font.Gotham
-    b.TextSize = 18
-    return b
-end
+-- OPEN/CLOSE MENU
+mini.MouseButton1Click:Connect(function()
+    main.Visible = not main.Visible
+end)
 
--- SLIDER FUNCTION
-local function createSlider(text, y, default, callback)
+-- INPUT BOX FUNCTION
+local function createInput(labelText, y, callback)
     local label = Instance.new("TextLabel", main)
     label.Size = UDim2.new(1, -20, 0, 25)
     label.Position = UDim2.new(0, 10, 0, y)
-    label.Text = text .. ": " .. default
+    label.Text = labelText
     label.BackgroundTransparency = 1
     label.TextColor3 = Color3.fromRGB(255, 255, 255)
     label.Font = Enum.Font.Gotham
     label.TextSize = 16
 
-    local slider = Instance.new("TextButton", main)
-    slider.Size = UDim2.new(1, -20, 0, 25)
-    slider.Position = UDim2.new(0, 10, 0, y + 25)
-    slider.Text = "Change"
-    slider.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    slider.TextColor3 = Color3.fromRGB(255, 255, 255)
+    local box = Instance.new("TextBox", main)
+    box.Size = UDim2.new(1, -20, 0, 30)
+    box.Position = UDim2.new(0, 10, 0, y + 25)
+    box.PlaceholderText = "0 - 500"
+    box.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    box.TextColor3 = Color3.fromRGB(255, 255, 255)
+    box.Font = Enum.Font.Gotham
+    box.TextSize = 16
 
-    slider.MouseButton1Click:Connect(function()
-        local val = tonumber(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("VincentInput") or "")
-        label.Text = text .. ": " .. default
-    end)
-
-    slider.MouseButton1Click:Connect(function()
-        callback(default)
+    box.FocusLost:Connect(function()
+        local num = tonumber(box.Text)
+        if num and num >= 0 and num <= 500 then
+            callback(num)
+        end
     end)
 end
 
--- SPEED BUTTON
-local speedBtn = createButton("Speed 50", 50)
-speedBtn.MouseButton1Click:Connect(function()
-    hum.WalkSpeed = 50
+-- SPEED INPUT
+createInput("Speed", 50, function(val)
+    hum.WalkSpeed = val
 end)
 
--- JUMP BUTTON
-local jumpBtn = createButton("Jump 100", 95)
-jumpBtn.MouseButton1Click:Connect(function()
-    hum.JumpPower = 100
+-- JUMP INPUT
+createInput("Jump", 120, function(val)
+    hum.JumpPower = val
 end)
 
 -- NOCLIP
 local noclip = false
-local noclipBtn = createButton("Noclip ON/OFF", 140)
+local noclipBtn = Instance.new("TextButton", main)
+noclipBtn.Size = UDim2.new(1, -20, 0, 35)
+noclipBtn.Position = UDim2.new(0, 10, 0, 190)
+noclipBtn.Text = "Noclip ON/OFF"
+noclipBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+noclipBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+noclipBtn.Font = Enum.Font.Gotham
+noclipBtn.TextSize = 18
+
 noclipBtn.MouseButton1Click:Connect(function()
     noclip = not noclip
 end)
@@ -90,26 +102,23 @@ game:GetService("RunService").Stepped:Connect(function()
     end
 end)
 
--- FLY LEGGERO
+-- FLY LEGGERO MIGLIORATO (LEGIT)
 local flying = false
-local flyBtn = createButton("Fly ON/OFF", 185)
+local flyBtn = Instance.new("TextButton", main)
+flyBtn.Size = UDim2.new(1, -20, 0, 35)
+flyBtn.Position = UDim2.new(0, 10, 0, 235)
+flyBtn.Text = "Fly ON/OFF"
+flyBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+flyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+flyBtn.Font = Enum.Font.Gotham
+flyBtn.TextSize = 18
+
 flyBtn.MouseButton1Click:Connect(function()
     flying = not flying
 end)
 
 game:GetService("RunService").RenderStepped:Connect(function()
     if flying then
-        char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame + Vector3.new(0, 0.5, 0)
-    end
-end)
-
--- TELEPORT TO PLAYER
-local tpBtn = createButton("Teleport to Player", 230)
-tpBtn.MouseButton1Click:Connect(function()
-    for _, plr in pairs(game.Players:GetPlayers()) do
-        if plr ~= player then
-            char.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
-            break
-        end
+        char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame + Vector3.new(0, 1, 0)
     end
 end)
