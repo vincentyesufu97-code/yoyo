@@ -1,49 +1,90 @@
--- VINCENT HUB (VERSIONE POTENZIATA LEGIT)
+-- VINCENT HUB DEFINITIVO (LEGIT)
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local hum = char:WaitForChild("Humanoid")
 
-local gui = Instance.new("ScreenGui")
-gui.Parent = game:GetService("CoreGui") -- NON SCOMPARE DOPO LA MORTE
+-- RICONNESSIONE DOPO LA MORTE
+player.CharacterAdded:Connect(function(newChar)
+    char = newChar
+    hum = newChar:WaitForChild("Humanoid")
+end)
 
--- QUADRATO "V" MINIMIZZATO
+-- GUI IN COREGUI (NON SCOMPARE MAI)
+local gui = Instance.new("ScreenGui")
+gui.Parent = game:GetService("CoreGui")
+
+-- MINI MENU TONDO CON V
 local mini = Instance.new("TextButton", gui)
-mini.Size = UDim2.new(0, 55, 0, 55)
+mini.Size = UDim2.new(0, 60, 0, 60)
 mini.Position = UDim2.new(0, 20, 0, 20)
-mini.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
-mini.BorderSizePixel = 2
-mini.BorderColor3 = Color3.fromRGB(255, 0, 0)
+mini.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 mini.Text = "V"
-mini.TextColor3 = Color3.fromRGB(255, 0, 0)
+mini.TextColor3 = Color3.fromRGB(255, 255, 255)
 mini.Font = Enum.Font.GothamBold
 mini.TextSize = 30
 mini.Active = true
 mini.Draggable = true
 
--- MENU PRINCIPALE
+local miniCorner = Instance.new("UICorner", mini)
+miniCorner.CornerRadius = UDim.new(1, 0)
+
+local miniStroke = Instance.new("UIStroke", mini)
+miniStroke.Color = Color3.fromRGB(255, 255, 255)
+miniStroke.Thickness = 2
+
+-- MENU GRANDE MODERNO ARROTONDATO
 local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0, 300, 0, 420)
-main.Position = UDim2.new(0, 20, 0, 90)
-main.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-main.BorderSizePixel = 0
+main.Size = UDim2.new(0, 320, 0, 450)
+main.Position = UDim2.new(0, 20, 0, 100)
+main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 main.Visible = false
 main.Active = true
 main.Draggable = true
 
+local mainCorner = Instance.new("UICorner", main)
+mainCorner.CornerRadius = UDim.new(0, 12)
+
 local title = Instance.new("TextLabel", main)
 title.Size = UDim2.new(1, 0, 0, 45)
 title.Text = "Vincent Hub"
-title.BackgroundColor3 = Color3.fromRGB(40, 0, 0)
+title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 22
+
+local titleCorner = Instance.new("UICorner", title)
+titleCorner.CornerRadius = UDim.new(0, 12)
+
+-- MINIMIZZA / MASSIMIZZA COME CHROME
+local toggleSize = Instance.new("TextButton", main)
+toggleSize.Size = UDim2.new(0, 40, 0, 40)
+toggleSize.Position = UDim2.new(1, -50, 0, 5)
+toggleSize.Text = "□"
+toggleSize.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+toggleSize.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleSize.Font = Enum.Font.GothamBold
+toggleSize.TextSize = 22
+
+local toggleCorner = Instance.new("UICorner", toggleSize)
+toggleCorner.CornerRadius = UDim.new(0, 10)
+
+local big = true
+toggleSize.MouseButton1Click:Connect(function()
+    if big then
+        main.Size = UDim2.new(0, 200, 0, 300)
+        big = false
+    else
+        main.Size = UDim2.new(0, 320, 0, 450)
+        big = true
+    end
+end)
 
 -- APRI/CHIUDI MENU
 mini.MouseButton1Click:Connect(function()
     main.Visible = not main.Visible
 end)
 
--- FUNZIONE INPUT
+-- INPUT BOX FUNZIONE
 local function createInput(labelText, y, callback)
     local label = Instance.new("TextLabel", main)
     label.Size = UDim2.new(1, -20, 0, 25)
@@ -62,6 +103,9 @@ local function createInput(labelText, y, callback)
     box.TextColor3 = Color3.fromRGB(255, 255, 255)
     box.Font = Enum.Font.Gotham
     box.TextSize = 16
+
+    local boxCorner = Instance.new("UICorner", box)
+    boxCorner.CornerRadius = UDim.new(0, 8)
 
     box.FocusLost:Connect(function()
         local num = tonumber(box.Text)
@@ -91,11 +135,14 @@ superJumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 superJumpBtn.Font = Enum.Font.Gotham
 superJumpBtn.TextSize = 18
 
+local superJumpCorner = Instance.new("UICorner", superJumpBtn)
+superJumpCorner.CornerRadius = UDim.new(0, 10)
+
 superJumpBtn.MouseButton1Click:Connect(function()
     char.HumanoidRootPart.Velocity = Vector3.new(0, 120, 0)
 end)
 
--- NOCLIP
+-- NOCLIP STABILE
 local noclip = false
 local noclipBtn = Instance.new("TextButton", main)
 noclipBtn.Size = UDim2.new(1, -20, 0, 35)
@@ -106,12 +153,15 @@ noclipBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 noclipBtn.Font = Enum.Font.Gotham
 noclipBtn.TextSize = 18
 
+local noclipCorner = Instance.new("UICorner", noclipBtn)
+noclipCorner.CornerRadius = UDim.new(0, 10)
+
 noclipBtn.MouseButton1Click:Connect(function()
     noclip = not noclip
 end)
 
 game:GetService("RunService").Stepped:Connect(function()
-    if noclip then
+    if noclip and char then
         for _, v in pairs(char:GetDescendants()) do
             if v:IsA("BasePart") then
                 v.CanCollide = false
@@ -120,8 +170,10 @@ game:GetService("RunService").Stepped:Connect(function()
     end
 end)
 
--- FLY FLUIDO LEGIT
+-- FLY FLUIDO CONTROLLABILE (SPACE SU, CTRL GIÙ)
 local flying = false
+local flySpeed = 2
+
 local flyBtn = Instance.new("TextButton", main)
 flyBtn.Size = UDim2.new(1, -20, 0, 35)
 flyBtn.Position = UDim2.new(0, 10, 0, 290)
@@ -131,15 +183,28 @@ flyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 flyBtn.Font = Enum.Font.Gotham
 flyBtn.TextSize = 18
 
+local flyCorner = Instance.new("UICorner", flyBtn)
+flyCorner.CornerRadius = UDim.new(0, 10)
+
 flyBtn.MouseButton1Click:Connect(function()
     flying = not flying
 end)
 
 game:GetService("RunService").RenderStepped:Connect(function()
-    if flying then
+    if flying and char then
         local cam = workspace.CurrentCamera
         local dir = cam.CFrame.LookVector
-        char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame + dir * 1.5
+        local root = char:FindFirstChild("HumanoidRootPart")
+
+        if root then
+            if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
+                root.CFrame = root.CFrame + Vector3.new(0, flySpeed, 0)
+            elseif game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
+                root.CFrame = root.CFrame - Vector3.new(0, flySpeed, 0)
+            else
+                root.CFrame = root.CFrame + dir * flySpeed
+            end
+        end
     end
 end)
 
@@ -152,6 +217,9 @@ espBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 espBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 espBtn.Font = Enum.Font.Gotham
 espBtn.TextSize = 18
+
+local espCorner = Instance.new("UICorner", espBtn)
+espCorner.CornerRadius = UDim.new(0, 10)
 
 espBtn.MouseButton1Click:Connect(function()
     for _, plr in pairs(game.Players:GetPlayers()) do
